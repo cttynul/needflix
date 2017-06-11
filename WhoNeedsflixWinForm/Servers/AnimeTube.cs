@@ -87,6 +87,7 @@ namespace WhoNeedsflixWinForm.Servers
                     if (href.Contains("strm"))
                     {
                         href = href.Replace("http://link.animetubeita.com/2361078/", "");
+                        // Aggiungi direttamente sorgente in mp4 da streammare
                         result.Add(new KeyValuePair<string, string>("Episodio " + i, href));
                         i++;
                     }

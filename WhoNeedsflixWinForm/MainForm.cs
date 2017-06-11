@@ -131,36 +131,15 @@ namespace WhoNeedsflixWinForm
 
         }
 
-        public void InitBrowser(string url)
+        public void PlayerLayout()
         {
             _headerBackground.Visible = true;
             _footerBackground.Visible = true;
             _headerPlayerImage.Visible = true;
-            //Cef.Initialize(new CefSettings());
-            //Browser = new ChromiumWebBrowser(url);
-            //this.Controls.Add(Browser);
-            //Browser.Dock = DockStyle.Fill;
 
-            //Hide control btn (close, minimize, maximize)
             _closeBtn.Visible = false;
             _maximizeBtn.Visible = false;
             _iconizeBtn.Visible = false;
-
-            //Kill popup
-            _geckoWebBrowser.CreateWindow += new EventHandler<GeckoCreateWindowEventArgs>(KillPopup);
-
-            _geckoWebBrowser.Visible = true;
-            //_geckoWebBrowser.Dock = DockStyle.Fill;
-            _geckoWebBrowser.Navigate(url);
-            GeckoPreferences.User["browser.xul.error_pages.enabled"] = true;
-            GeckoPreferences.User["security.enable_ssl2"] = true;
-            GeckoPreferences.User["security.default_personal_cert"] = "Ask Never";
-            GeckoPreferences.User["security.warn_entering_weak"] = true;
-            GeckoPreferences.User["security.warn_viewing_mixed"] = true;
-            GeckoPreferences.User["dom.disable_open_during_load"] = true;
-            GeckoPreferences.User["dom.allow_scripts_to_close_windows"] = true;
-            GeckoPreferences.User["dom.popup_maximum"] = 0;
-            GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
 
             _labelResult.Visible = false;
             _labelCountResult.Visible = false;
@@ -212,7 +191,28 @@ namespace WhoNeedsflixWinForm
 
             _fullScreen.Visible = true;
             _hideButtonBar.Visible = true;
+        }
 
+        public void InitBrowser(string url)
+        {
+
+            //Kill popup
+            _geckoWebBrowser.CreateWindow += new EventHandler<GeckoCreateWindowEventArgs>(KillPopup);
+
+            _geckoWebBrowser.Visible = true;
+            //_geckoWebBrowser.Dock = DockStyle.Fill;
+            _geckoWebBrowser.Navigate(url);
+            GeckoPreferences.User["browser.xul.error_pages.enabled"] = true;
+            GeckoPreferences.User["security.enable_ssl2"] = true;
+            GeckoPreferences.User["security.default_personal_cert"] = "Ask Never";
+            GeckoPreferences.User["security.warn_entering_weak"] = true;
+            GeckoPreferences.User["security.warn_viewing_mixed"] = true;
+            GeckoPreferences.User["dom.disable_open_during_load"] = true;
+            GeckoPreferences.User["dom.allow_scripts_to_close_windows"] = true;
+            GeckoPreferences.User["dom.popup_maximum"] = 0;
+            GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
+
+            PlayerLayout();
         }
 
         void KillPopup(object sender, GeckoCreateWindowEventArgs e)
@@ -1548,11 +1548,6 @@ namespace WhoNeedsflixWinForm
 
         }
 
-        private void _radioPirate_CheckedChanged(object sender, EventArgs e)
-        {
-            MessageBox.Show("Funzione sperimentale! Usala solo se non trovi risultati negli altri form di ricerca!", "Ops!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
         private void _gridTVSeries_Click(object sender, DataGridViewCellEventArgs e)
         {
             int selectedrowindex = _gridTVSeries.SelectedCells[0].RowIndex;
@@ -1588,17 +1583,29 @@ namespace WhoNeedsflixWinForm
 
         private void _radioA01_CheckedChanged(object sender, EventArgs e)
         {
+            _mainPic.Visible = true;
             PopulateCombobox();
         }
 
         private void _radioGuarda_CheckedChanged(object sender, EventArgs e)
         {
+            _mainPic.Visible = true;
             if (_radioGuarda.Checked)
                 _combobox.Visible = false;
             else
                 _combobox.Visible = true;
         }
 
+        private void _radioAnime_CheckedChanged(object sender, EventArgs e)
+        {
+            _mainPic.Visible = true;
+            if (_radioAnime.Checked)
+            {
+                MessageBox.Show("Funzione ancora sperimentale! Non è ancora perfetta ma potrebbe diventarlo :3", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                _urlElementi = _animeTube.getLibrary();
+                _urlImmagini.Clear();
+            }
+        }
 
         // thingz to make window resizable
         protected override void WndProc(ref Message m)
@@ -1675,15 +1682,6 @@ namespace WhoNeedsflixWinForm
         private void _iconizeBtn_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void _radioAnime_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_radioAnime.Checked)
-            {
-                _urlElementi = _animeTube.getLibrary();
-                _urlImmagini.Clear();
-            }
         }
 
         private void _combobox_SelectedIndexChanged(object sender, EventArgs e)

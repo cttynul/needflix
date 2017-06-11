@@ -43,9 +43,6 @@
             this._radioA01 = new MetroFramework.Controls.MetroRadioButton();
             this._tvShowTimeLabel = new MetroFramework.Controls.MetroLink();
             this._gridTVSeries = new MetroFramework.Controls.MetroGrid();
-            this.episodioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.seriesDictionaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this._labelCountResult = new MetroFramework.Controls.MetroLabel();
             this._helpButton = new MetroFramework.Controls.MetroLink();
             this._combobox = new MetroFramework.Controls.MetroComboBox();
@@ -79,9 +76,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._backgroundToBePopuled = new System.Windows.Forms.PictureBox();
             this._radioAnime = new MetroFramework.Controls.MetroRadioButton();
+            this.episodioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.seriesDictionaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._gridTVSeries)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._mainPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._trailerButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._guardaButton)).BeginInit();
@@ -98,6 +97,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._resultPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._backgroundToBePopuled)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // searchTextBox
@@ -318,27 +318,6 @@
             this._gridTVSeries.Visible = false;
             this._gridTVSeries.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._gridTVSeries_Click);
             this._gridTVSeries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._gridTVSeries_Click);
-            // 
-            // episodioDataGridViewTextBoxColumn
-            // 
-            this.episodioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.episodioDataGridViewTextBoxColumn.DataPropertyName = "Episodio";
-            this.episodioDataGridViewTextBoxColumn.HeaderText = "Episodio";
-            this.episodioDataGridViewTextBoxColumn.Name = "episodioDataGridViewTextBoxColumn";
-            this.episodioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // urlDataGridViewTextBoxColumn
-            // 
-            this.urlDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
-            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
-            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
-            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.urlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // seriesDictionaryBindingSource
-            // 
-            this.seriesDictionaryBindingSource.DataSource = typeof(WhoNeedsflixWinForm.Utils.SeriesDictionary);
             // 
             // _labelCountResult
             // 
@@ -855,6 +834,27 @@
             this._radioAnime.UseSelectable = true;
             this._radioAnime.CheckedChanged += new System.EventHandler(this._radioAnime_CheckedChanged);
             // 
+            // episodioDataGridViewTextBoxColumn
+            // 
+            this.episodioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.episodioDataGridViewTextBoxColumn.DataPropertyName = "Episodio";
+            this.episodioDataGridViewTextBoxColumn.HeaderText = "Episodio";
+            this.episodioDataGridViewTextBoxColumn.Name = "episodioDataGridViewTextBoxColumn";
+            this.episodioDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // urlDataGridViewTextBoxColumn
+            // 
+            this.urlDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
+            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
+            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
+            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.urlDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // seriesDictionaryBindingSource
+            // 
+            this.seriesDictionaryBindingSource.DataSource = typeof(WhoNeedsflixWinForm.Utils.SeriesDictionary);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -909,7 +909,6 @@
             this.Text = "Pizzabox";
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._gridTVSeries)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._mainPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._trailerButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._guardaButton)).EndInit();
@@ -926,6 +925,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._resultPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._backgroundToBePopuled)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
