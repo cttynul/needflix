@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
-[assembly: AssemblyTitle("Pizzabox")]
+[assembly: AssemblyTitle("Needflix")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Pizzabox")]
+[assembly: AssemblyProduct("Needflix")]
 [assembly: AssemblyCopyright("Copyright © cttynul 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

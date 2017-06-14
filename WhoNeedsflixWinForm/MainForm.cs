@@ -31,6 +31,7 @@ namespace WhoNeedsflixWinForm
         FilmTutti _filmPerTutti = new FilmTutti();
         Cineblog01 _cb01 = new Cineblog01();
         AnimeTube _animeTube = new AnimeTube();
+        AnimeForge _animeForge = new AnimeForge();
 
         // utils
         Openload _openload = new Openload();
@@ -212,13 +213,36 @@ namespace WhoNeedsflixWinForm
             GeckoPreferences.User["dom.popup_maximum"] = 0;
             GeckoPreferences.Default["extensions.blocklist.enabled"] = false;
 
+            // boost prferences
+            GeckoPreferences.User["browser.cache.disk.enable"] = true;
+            GeckoPreferences.User["browser.xul.error_pages.enabled"] = true;
+            GeckoPreferences.User["browser.cache.disk.capacity"] = 358400;
+            GeckoPreferences.User["browser.cache.disk.filesystem_reported"] = 1;
+            GeckoPreferences.User["browser.cache.disk.smart_size.first_run"] = false;
+            GeckoPreferences.User["browser.cache.frecency* _experiment"] = 4;
+
+            // enable fullscreen
+            GeckoPreferences.User["full-screen-api.enabled"] = true;
+            GeckoPreferences.User["full-screen-api.approval-required"] = false;
+            GeckoPreferences.User["full-screen-api.content-only"] = true;
+            GeckoPreferences.User["full-screen-api.ignore-widgets"] = true;
+
+            _geckoWebBrowser.EnableDefaultFullscreen();
+
             PlayerLayout();
         }
 
         void KillPopup(object sender, GeckoCreateWindowEventArgs e)
         {
-            //Keep popup new window here!
-            e.Cancel = true;
+            if (e.Uri.ToString().Contains("facebook"))
+            {
+
+            }
+            else
+            {
+                //Keep popup new window here!
+                e.Cancel = true;
+            }
         }
 
         private void searchButton_Click(object sender, EventArgs e)
@@ -268,7 +292,11 @@ namespace WhoNeedsflixWinForm
             {
                 Cineblog01Cerca();
             }
-            else if (_radioAnime.Checked)
+            else if (_radioAnime.Checked == true && (string) _combobox.SelectedItem == "Anime ITA e SUB-ITA")
+            {
+                AnimeForgeCerca();
+            }
+            else if (_radioAnime.Checked && (string)_combobox.SelectedItem == "Anime (SUB-ITA)")
             {
                 AnimeTubeCerca();
             }
@@ -323,7 +351,26 @@ namespace WhoNeedsflixWinForm
                 {
                     Cineblog01LabelClick();
                 }
-                else if (_radioAnime.Checked)
+                else if (_radioAnime.Checked == true && (string)_combobox.SelectedItem == "Anime ITA e SUB-ITA")
+                {
+                    if (_gridTVSeries.Visible == true)
+                    {
+                        int selectedrowindex = _gridTVSeries.SelectedCells[0].RowIndex;
+                        string urlSelectedSeries = Convert.ToString(_gridTVSeries.Rows[selectedrowindex].Cells[1].Value);
+                        if (urlSelectedSeries.Contains("youtube"))
+                        {
+                            urlSelectedSeries = urlSelectedSeries.Replace("watch?v=", "embed/");
+                            InitBrowser(urlSelectedSeries);
+                        }
+                        else
+                        {
+                            InitBrowser(urlSelectedSeries);
+                        }
+                    }
+                    else
+                        AnimeForgeLabelClick();
+                }
+                else if(_radioAnime.Checked == true && (string)_combobox.SelectedItem == "Anime (SUB-ITA)")
                 {
                     if (_gridTVSeries.Visible == true)
                     {
@@ -748,7 +795,8 @@ namespace WhoNeedsflixWinForm
             _radioA01.Visible = true;
             _radioAnime.Visible = true;
 
-            _combobox.Visible = true;
+            if(_radioA01.Checked || _radioAnime.Checked)
+                _combobox.Visible = true;
 
             // show linklabes
             _tvShowTimeLabel.Visible = true;
@@ -1052,15 +1100,23 @@ namespace WhoNeedsflixWinForm
                 _urlSeries = _gSerie.getEpisodes(_urlElementi.ElementAt(goForwardInfoResult).Value);
                 // salvo il nome della serie
                 _currentSerieName = _urlElementi.ElementAt(goForwardInfoResult).Key;
-                int countUrl = _urlSeries.Count() / 2;
-                for (int countEp = 0; countEp < _urlSeries.Count() / 2; countEp++)
+                int countUrl = (_urlSeries.Count() / 3) * 2;
+                int countEpName = _urlSeries.Count / 3;
+                for (int countEp = 0; countEp < _urlSeries.Count() / 3; countEp++)
                 {
                     //_serieTVEpisodi.Add(new KeyValuePair<string, string>(_urlSeries.ElementAt(countEp), _urlSeries.ElementAt(countUrl)));
                     SeriesDictionary _series = new SeriesDictionary();
-                    _series.Episodio = _urlSeries.ElementAt(countEp);
-                    _series.Url = _urlSeries.ElementAt(countUrl);
-                    _serieTVEpisodi.Add(_series);
+                    {
+                        var epNameTemp = _urlSeries.ElementAt(countEpName);
+                        if(epNameTemp == String.Empty)
+                            epNameTemp = "Nessun titolo disponibile";
+                        
+                        _series.Episodio = _urlSeries.ElementAt(countEp) + " - " + epNameTemp;
+                        _series.Url = _urlSeries.ElementAt(countUrl);
+                        _serieTVEpisodi.Add(_series);
+                    }
                     countUrl++;
+                    countEpName++;
                 }
                 //_urlElementi = _serieTVEpisodi;
 
@@ -1078,9 +1134,82 @@ namespace WhoNeedsflixWinForm
         }
 
         /*
+         * AnimeForge
+         * Handlers
+         */
+        private void AnimeForgeCerca()
+        {
+            _addToFavBtn.Visible = true;
+            //try
+            {
+                _mainPic.Visible = false;
+                _nextBtn.Visible = true;
+                _backBtn.Visible = true;
+
+                //_helpPic.Visible = false;
+
+                _urlElementi = _animeForge.search(searchTextBox.Text);
+
+                //_descrizioneContenuti = _genio.getDescriptionData(resultSearch);
+
+                foreach (var el in _urlElementi)
+                {
+                    _urlImmagini.Add("http://reelcinemas.ae/Images/Movies/not-found/no-poster.jpg");
+                }
+
+                // Populate results
+                PopulateInfo();
+                goForwardInfoResult = 0;
+            }
+
+        }
+
+        private void AnimeForgeLabelClick()
+        {
+            var el = _urlElementi.ElementAt(goForwardInfoResult).Value;
+            if (!el.Contains("?file=") || !el.Contains("vvvvid") || !el.Contains("youtube") || !el.Contains("bit"))
+            {
+                List<SeriesDictionary> _serieTVEpisodi = new List<SeriesDictionary>();
+
+                // Apro serie
+                var _urls = _animeForge.getEpisodes(_urlElementi.ElementAt(goForwardInfoResult).Value);
+                // salvo il nome della serie
+
+                foreach (var _url in _urls)
+                {
+                    //_serieTVEpisodi.Add(new KeyValuePair<string, string>(_urlSeries.ElementAt(countEp), _urlSeries.ElementAt(countUrl)));
+                    SeriesDictionary _series = new SeriesDictionary();
+                    _series.Episodio = _url.Key;
+                    _series.Url = _url.Value;
+                    _serieTVEpisodi.Add(_series);
+                }
+                //_urlElementi = _serieTVEpisodi;
+
+                // Show grid
+                seriesDictionaryBindingSource.DataSource = _serieTVEpisodi;
+                _gridTVSeries.Visible = true;
+                _labelResult.Text = _labelResult.Text + " - Episodi";
+                goForwardInfoResult = 0;
+                //PopulateSerie();
+            }
+            else
+            {
+                if (el.Contains("youtube"))
+                {
+                    el = el.Replace("watch?v=", "embed/");
+                    InitBrowser(el);
+                }
+                else
+                {
+                    InitBrowser(el);
+                }
+            }
+        }
+
+        /*
          * AnimeTubeIta
          * Handlers
-         */ 
+         */
         private void AnimeTubeCerca()
         {
             _addToFavBtn.Visible = true;
@@ -1098,7 +1227,7 @@ namespace WhoNeedsflixWinForm
 
                 foreach(var el in _urlElementi)
                 {
-                    _urlImmagini.Add("http://mtdb.vebto.com/assets/images/imdbnoimage.jpg");
+                    _urlImmagini.Add("http://reelcinemas.ae/Images/Movies/not-found/no-poster.jpg");
                 }
 
                 // Populate results
@@ -1528,9 +1657,10 @@ namespace WhoNeedsflixWinForm
             }
             else if (_radioAnime.Checked)
             {
+                _combobox.Items.Add("Anime ITA e SUB-ITA");
                 _combobox.Items.Add("Anime (SUB-ITA)");
                 _combobox.Items.Add("VVVVID");
-                _combobox.SelectedItem = "Anime (SUB-ITA)";
+                _combobox.SelectedItem = "Anime ITA e SUB-ITA";
             }
         }
 
@@ -1584,12 +1714,14 @@ namespace WhoNeedsflixWinForm
         private void _radioA01_CheckedChanged(object sender, EventArgs e)
         {
             _mainPic.Visible = true;
+            _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             PopulateCombobox();
         }
 
         private void _radioGuarda_CheckedChanged(object sender, EventArgs e)
         {
             _mainPic.Visible = true;
+            _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             if (_radioGuarda.Checked)
                 _combobox.Visible = false;
             else
@@ -1599,10 +1731,20 @@ namespace WhoNeedsflixWinForm
         private void _radioAnime_CheckedChanged(object sender, EventArgs e)
         {
             _mainPic.Visible = true;
+            _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             if (_radioAnime.Checked)
             {
-                MessageBox.Show("Funzione ancora sperimentale! Non è ancora perfetta ma potrebbe diventarlo :3", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                _urlElementi = _animeTube.getLibrary();
+                PopulateCombobox();
+                MessageBox.Show("Funzione ancora sperimentale! Non è ancora perfetta ma potrebbe diventarlo :3\nPer anime commerciali effettua la ricerca in Serie TV", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if((string)_combobox.SelectedItem == "Anime ITA e SUB-ITA")
+                {
+                    _urlElementi = _animeForge.getLibrary();
+                }
+                else
+                {
+                    _urlElementi = _animeTube.getLibrary();
+                }
+
                 _urlImmagini.Clear();
             }
         }

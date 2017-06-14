@@ -81,7 +81,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>PizzaBOXIcon%281%29.ico</ApplicationIcon>
+    <ApplicationIcon>N-NoBG.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Geckofx-Core, Version=45.0.31.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
@@ -169,6 +169,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Servers\AnimeForge.cs" />
     <Compile Include="Servers\AnimeTube.cs" />
     <Compile Include="Servers\Cineblog01.cs" />
     <Compile Include="SettingsForm.cs">
@@ -276,6 +277,7 @@
     <None Include="Resources\info-rounded.png" />
     <None Include="Resources\settings-material.png" />
     <None Include="Resources\search-material.png" />
+    <Content Include="N-NoBG.ico" />
     <Content Include="PizzaBOXIcon%281%29.ico" />
     <None Include="Resources\CloseIcon.png" />
     <None Include="Resources\MaximizeIcon.png" />

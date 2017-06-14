@@ -46,6 +46,7 @@
             this._labelCountResult = new MetroFramework.Controls.MetroLabel();
             this._helpButton = new MetroFramework.Controls.MetroLink();
             this._combobox = new MetroFramework.Controls.MetroComboBox();
+            this._radioAnime = new MetroFramework.Controls.MetroRadioButton();
             this._iconizeBtn = new MetroFramework.Controls.MetroLink();
             this._maximizeBtn = new MetroFramework.Controls.MetroLink();
             this._closeBtn = new MetroFramework.Controls.MetroLink();
@@ -75,7 +76,6 @@
             this._nextBtn = new MetroFramework.Controls.MetroLink();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._backgroundToBePopuled = new System.Windows.Forms.PictureBox();
-            this._radioAnime = new MetroFramework.Controls.MetroRadioButton();
             this.episodioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.seriesDictionaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -343,7 +343,6 @@
             this._helpButton.Size = new System.Drawing.Size(217, 65);
             this._helpButton.Style = MetroFramework.MetroColorStyle.White;
             this._helpButton.TabIndex = 32;
-            this._helpButton.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             this._helpButton.UseCustomBackColor = true;
             this._helpButton.UseCustomForeColor = true;
             this._helpButton.UseSelectable = true;
@@ -366,6 +365,22 @@
             this._combobox.UseSelectable = true;
             this._combobox.UseStyleColors = true;
             this._combobox.SelectedIndexChanged += new System.EventHandler(this._combobox_SelectedIndexChanged);
+            // 
+            // _radioAnime
+            // 
+            this._radioAnime.AutoSize = true;
+            this._radioAnime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this._radioAnime.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
+            this._radioAnime.Location = new System.Drawing.Point(387, 62);
+            this._radioAnime.Name = "_radioAnime";
+            this._radioAnime.Size = new System.Drawing.Size(79, 25);
+            this._radioAnime.Style = MetroFramework.MetroColorStyle.Red;
+            this._radioAnime.TabIndex = 64;
+            this._radioAnime.Text = "Anime";
+            this._radioAnime.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this._radioAnime.UseCustomBackColor = true;
+            this._radioAnime.UseSelectable = true;
+            this._radioAnime.CheckedChanged += new System.EventHandler(this._radioAnime_CheckedChanged);
             // 
             // _iconizeBtn
             // 
@@ -597,9 +612,9 @@
             // 
             this._header.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this._header.Image = global::WhoNeedsflixWinForm.Properties.Resources.Header;
-            this._header.Location = new System.Drawing.Point(34, 12);
+            this._header.Location = new System.Drawing.Point(46, 23);
             this._header.Name = "_header";
-            this._header.Size = new System.Drawing.Size(183, 85);
+            this._header.Size = new System.Drawing.Size(155, 64);
             this._header.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this._header.TabIndex = 11;
             this._header.TabStop = false;
@@ -818,22 +833,6 @@
             this._backgroundToBePopuled.TabStop = false;
             this._backgroundToBePopuled.Visible = false;
             // 
-            // _radioAnime
-            // 
-            this._radioAnime.AutoSize = true;
-            this._radioAnime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this._radioAnime.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
-            this._radioAnime.Location = new System.Drawing.Point(387, 62);
-            this._radioAnime.Name = "_radioAnime";
-            this._radioAnime.Size = new System.Drawing.Size(79, 25);
-            this._radioAnime.Style = MetroFramework.MetroColorStyle.Red;
-            this._radioAnime.TabIndex = 64;
-            this._radioAnime.Text = "Anime";
-            this._radioAnime.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this._radioAnime.UseCustomBackColor = true;
-            this._radioAnime.UseSelectable = true;
-            this._radioAnime.CheckedChanged += new System.EventHandler(this._radioAnime_CheckedChanged);
-            // 
             // episodioDataGridViewTextBoxColumn
             // 
             this.episodioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -906,7 +905,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Pizzabox";
+            this.Text = "Needflix";
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._gridTVSeries)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._mainPic)).EndInit();

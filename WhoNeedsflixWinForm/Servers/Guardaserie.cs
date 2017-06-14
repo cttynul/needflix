@@ -86,8 +86,13 @@ namespace WhoNeedsflixWinForm.Servers
             foreach (var div in doc.DocumentNode.SelectNodes("//div[@class='number-episodes-on-img']"))
             {
                 var number = div.InnerText;
-                number = number.Replace(" ", "");
+                number = number.Trim();
                 result.Add(number);
+            }
+            foreach (var div in doc.DocumentNode.SelectNodes("//span[@class='pull-left bottom-year']"))
+            {
+                var episodename = div.InnerText;
+                result.Add(episodename);
             }
             //var name = div.Descendants("a").ToList();
             foreach (var link in doc.DocumentNode.SelectNodes("//span[@meta-serie]"))
