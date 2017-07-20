@@ -10,7 +10,7 @@ namespace WhoNeedsflixWinForm.Servers
 {
     class Altadefinizione01
     {
-        public string searchUrl = "http://www.altadefinizione01.pink/?s=";
+        public string searchUrl = "http://www.altadefinizione01.onl/?s=";
 
         public string search(string mySearch)
         {

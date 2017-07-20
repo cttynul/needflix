@@ -172,6 +172,7 @@
     <Compile Include="Servers\AnimeForge.cs" />
     <Compile Include="Servers\AnimeTube.cs" />
     <Compile Include="Servers\Cineblog01.cs" />
+    <Compile Include="Servers\SerieHD.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

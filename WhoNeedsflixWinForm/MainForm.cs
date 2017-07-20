@@ -24,36 +24,39 @@ namespace WhoNeedsflixWinForm
 
     public partial class MainForm : Form
     {
-        Genio _genio = new Genio();
-        Guardaserie _gSerie = new Guardaserie();
-        Altadefinizione01 _a01 = new Altadefinizione01();
-        Piratestreaming _pirate = new Piratestreaming();
-        FilmTutti _filmPerTutti = new FilmTutti();
-        Cineblog01 _cb01 = new Cineblog01();
-        AnimeTube _animeTube = new AnimeTube();
-        AnimeForge _animeForge = new AnimeForge();
+        private Genio _genio = new Genio();
+        private Guardaserie _gSerie = new Guardaserie();
+        private Altadefinizione01 _a01 = new Altadefinizione01();
+        private Piratestreaming _pirate = new Piratestreaming();
+        private FilmTutti _filmPerTutti = new FilmTutti();
+        private Cineblog01 _cb01 = new Cineblog01();
+        private AnimeTube _animeTube = new AnimeTube();
+        private AnimeForge _animeForge = new AnimeForge();
+        private SerieHD _serieHD = new SerieHD();
 
         // utils
-        Openload _openload = new Openload();
-        Nowvideo _nowVideo = new Nowvideo();
-        Rapidvideo _rapidvideo = new Rapidvideo();
+        private Openload _openload = new Openload();
+        private Nowvideo _nowVideo = new Nowvideo();
+        private Rapidvideo _rapidvideo = new Rapidvideo();
+        private TMDb _tmdb = new TMDb();
 
-        TMDb _tmdb = new TMDb();
+        // helpers
+        private bool hasAnimeBeenClicked = false;
 
-        List<KeyValuePair<string, string>> _urlElementi = new List<KeyValuePair<string, string>>();
+        private List<KeyValuePair<string, string>> _urlElementi = new List<KeyValuePair<string, string>>();
         //List<KeyValuePair<string, string>> _serieTVEpisodi = new List<KeyValuePair<string, string>>();
 
-        List<string> _urlSeries = new List<string>();
-        string _currentUrlSerie = "";
+        private List<string> _urlSeries = new List<string>();
+        private string _currentUrlSerie = "";
 
         // Qui viene storato il nome della serie TV attualmente aperta da guardaserie
-        string _currentSerieName = "";
+        private string _currentSerieName = "";
 
-        List<string> _urlImmagini = new List<string>();
-        List<string> _descrizioneContenuti = new List<string>();
+        private List<string> _urlImmagini = new List<string>();
+        private List<string> _descrizioneContenuti = new List<string>();
 
-        int goForwardInfoResult = 0;
-        int goSeries = 0;
+        private int goForwardInfoResult = 0;
+        private int goSeries = 0;
         public bool fullScreenMode;
         private uint fPreviousExecutionState;
 
@@ -268,9 +271,13 @@ namespace WhoNeedsflixWinForm
             _currentUrlSerie = "";
             goForwardInfoResult = 0;
 
-            if (_radioGuarda.Checked == true)
+            if (_radioGuarda.Checked == true && (string) _combobox.SelectedItem == "Serie TV #1")
             {
                 GuardaSerieCerca();
+            }
+            if (_radioGuarda.Checked == true && (string)_combobox.SelectedItem == "Serie TV #2")
+            {
+                SerieHDCerca();
             }
             else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
             {
@@ -320,7 +327,7 @@ namespace WhoNeedsflixWinForm
         {
             try
             {
-                if (_radioGuarda.Checked )
+                if (_radioGuarda.Checked && (string)_combobox.SelectedItem == "Serie TV #1")
                 {
                     if (_gridTVSeries.Visible == true)
                     {
@@ -330,6 +337,10 @@ namespace WhoNeedsflixWinForm
                     }
                     else
                         GuardaSerieLabelClick();
+                }
+                if (_radioGuarda.Checked == true && (string)_combobox.SelectedItem == "Serie TV #2")
+                {
+                    SerieHDLabelClick();
                 }
                 else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
                 {
@@ -428,7 +439,7 @@ namespace WhoNeedsflixWinForm
                 _labelResult.Text = goNextUrl;
                 var currentUrl = _urlElementi.ElementAt(goForwardInfoResult).Key;
 
-                if (url.Contains("guardaserie") || url.Contains("anime"))
+                if (_radioAnime.Checked || _radioGuarda.Checked)
                 {
                     try
                     {
@@ -798,6 +809,7 @@ namespace WhoNeedsflixWinForm
             if(_radioA01.Checked || _radioAnime.Checked)
                 _combobox.Visible = true;
 
+
             // show linklabes
             _tvShowTimeLabel.Visible = true;
 
@@ -1048,11 +1060,15 @@ namespace WhoNeedsflixWinForm
             catch
             {
                 MessageBox.Show("Impossibile visualizzare la lista dei preferiti!", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
+                _mainPic.BackColor = Color.Transparent;
                 _mainPic.Visible = true;
             }
             if(_labelResult.Text == "NoResult")
             {
                 MessageBox.Show("Impossibile visualizzare la lista dei preferiti!", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
+                _mainPic.BackColor = Color.Transparent;
                 _mainPic.Visible = true;
             }
         }
@@ -1467,6 +1483,64 @@ namespace WhoNeedsflixWinForm
         }
 
         /*
+         * SerieHD
+         * Shittyhandlers
+         */
+        private void SerieHDCerca()
+        {
+            try
+            {
+                _mainPic.Visible = false;
+                _nextBtn.Visible = true;
+                _backBtn.Visible = true;
+
+
+                //_helpPic.Visible = false;
+
+                string resultSearch = _serieHD.search(searchTextBox.Text);
+                _urlElementi = _serieHD.getLibrary(resultSearch);
+
+                _urlImmagini = _serieHD.getUrlImage(resultSearch);
+                //_descrizioneContenuti = _genio.getDescriptionData(resultSearch);
+
+                // Populate results
+                PopulateInfo();
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void SerieHDLabelClick()
+        {
+            string _filmUrl = "";
+            try
+            {
+                _filmUrl = _serieHD.playUrl(_urlElementi.ElementAt(goForwardInfoResult).Value);
+                if (_openload.checkIfWorks(_filmUrl) == true)
+                {
+                    InitBrowser(_filmUrl);
+                }
+                else
+                {
+                    InitBrowser("http://www.e-try.com/black.htm");
+                    _mainPic.Visible = true;
+                    _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Error;
+                    _mainPic.BackColor = Color.Black;
+                }
+            }
+            catch
+            {
+                InitBrowser("http://www.e-try.com/black.htm");
+                _mainPic.Visible = true;
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Error;
+                _mainPic.BackColor = Color.Black;
+            }
+        }
+
+        /*
          * OpenLoadMovie
          * Handlers
          */
@@ -1662,6 +1736,12 @@ namespace WhoNeedsflixWinForm
                 _combobox.Items.Add("VVVVID");
                 _combobox.SelectedItem = "Anime ITA e SUB-ITA";
             }
+            else if (_radioGuarda.Checked)
+            {
+                _combobox.Items.Add("Serie TV #1");
+                _combobox.Items.Add("Serie TV #2");
+                _combobox.SelectedItem = "Serie TV #1";
+            }
         }
 
         private void _tvShowTimeLabel_Click(object sender, EventArgs e)
@@ -1716,6 +1796,8 @@ namespace WhoNeedsflixWinForm
             _mainPic.Visible = true;
             _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             PopulateCombobox();
+            if (_radioA01.Checked)
+                _combobox.Visible = true;
         }
 
         private void _radioGuarda_CheckedChanged(object sender, EventArgs e)
@@ -1724,8 +1806,7 @@ namespace WhoNeedsflixWinForm
             _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             if (_radioGuarda.Checked)
                 _combobox.Visible = false;
-            else
-                _combobox.Visible = true;
+            PopulateCombobox();
         }
 
         private void _radioAnime_CheckedChanged(object sender, EventArgs e)
@@ -1734,9 +1815,14 @@ namespace WhoNeedsflixWinForm
             _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             if (_radioAnime.Checked)
             {
+                _combobox.Visible = true;
                 PopulateCombobox();
-                MessageBox.Show("Funzione ancora sperimentale! Non è ancora perfetta ma potrebbe diventarlo :3\nPer anime commerciali effettua la ricerca in Serie TV", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                if((string)_combobox.SelectedItem == "Anime ITA e SUB-ITA")
+                if(hasAnimeBeenClicked == false)
+                {
+                    MessageBox.Show("Funzione ancora sperimentale! Non è ancora perfetta ma potrebbe diventarlo :3\nPer anime commerciali effettua la ricerca in Serie TV", "Ops", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    hasAnimeBeenClicked = true;
+                }
+                if ((string)_combobox.SelectedItem == "Anime ITA e SUB-ITA")
                 {
                     _urlElementi = _animeForge.getLibrary();
                 }
