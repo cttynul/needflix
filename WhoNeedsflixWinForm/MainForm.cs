@@ -1732,7 +1732,7 @@ namespace WhoNeedsflixWinForm
             else if (_radioAnime.Checked)
             {
                 _combobox.Items.Add("Anime ITA e SUB-ITA");
-                _combobox.Items.Add("Anime (SUB-ITA)");
+                //_combobox.Items.Add("Anime (SUB-ITA)");
                 _combobox.Items.Add("VVVVID");
                 _combobox.SelectedItem = "Anime ITA e SUB-ITA";
             }
@@ -1828,7 +1828,7 @@ namespace WhoNeedsflixWinForm
                 }
                 else
                 {
-                    _urlElementi = _animeTube.getLibrary();
+                    //_urlElementi = _animeTube.getLibrary();
                 }
 
                 _urlImmagini.Clear();
