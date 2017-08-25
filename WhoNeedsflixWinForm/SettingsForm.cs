@@ -16,7 +16,6 @@ namespace WhoNeedsflixWinForm
         public SettingsForm()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void metroLink1_Click(object sender, EventArgs e)

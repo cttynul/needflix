@@ -18,7 +18,7 @@ namespace WhoNeedsflixWinForm.Utils
 
         public void LeaveFullScreenMode(Form targetForm)
         {
-            //targetForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            targetForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             targetForm.WindowState = FormWindowState.Normal;
         }
     }

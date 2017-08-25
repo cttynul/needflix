@@ -83,7 +83,7 @@ namespace WhoNeedsflixWinForm
             InitializeComponent();
 
             // Nascosti bordi
-            this.FormBorderStyle = FormBorderStyle.None;
+            //this.FormBorderStyle = FormBorderStyle.None;
 
 
             Xpcom.Initialize("Firefox");
@@ -280,12 +280,12 @@ namespace WhoNeedsflixWinForm
             {
                 SerieHDCerca();
             }
-            /*
-            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
+            
+            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #2 (ITA) - HD")
             {
                 A01Cerca();
             }
-            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #4 - MD")
+            /*else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #4 - MD")
             {
                 PirateCerca();
             }
@@ -294,7 +294,7 @@ namespace WhoNeedsflixWinForm
             {
                 OpenLoadMovieCerca();
             }
-            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - HD")
+            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 (ITA) - HD")
             {
                 FilmPerTuttiCerca();
             }
@@ -347,11 +347,11 @@ namespace WhoNeedsflixWinForm
                 {
                     SerieHDLabelClick();
                 }
-                /*else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
+                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #2 (ITA) - HD")
                 {
                     A01LabelCLick();
                 }
-                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #4 - MD")
+                /*else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #4 - MD")
                 {
                     PirateLabelClick();
                 }
@@ -360,7 +360,7 @@ namespace WhoNeedsflixWinForm
                 {
                     OpenLoadMovieLabelClick();
                 }
-                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - HD")
+                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 (ITA) - HD")
                 {
                     FilmPerTuttiLabelClick();
                 }
@@ -775,11 +775,11 @@ namespace WhoNeedsflixWinForm
 
             _mainPic.Visible = false;
 
-            // reshowa close, minimize, iconize
+            /* reshowa close, minimize, iconize
             _closeBtn.Visible = true;
             _maximizeBtn.Visible = true;
             _iconizeBtn.Visible = true;
-
+            */
             _geckoWebBrowser.Visible = false;
             _homeBtn.Visible = false;
             _downloadButton.Visible = false;
@@ -1739,12 +1739,12 @@ namespace WhoNeedsflixWinForm
             _combobox.Items.Clear();
             if (_radioA01.Checked)
             {
-                _combobox.Items.Add("Film (ITA) - HD");
-                //_combobox.Items.Add("Film #2 - HD");
+                _combobox.Items.Add("Film #1 (ITA) - HD");
+                //_combobox.Items.Add("Film #2 (ITA) - HD");
                 //_combobox.Items.Add("Film #3 - HD");
                 //_combobox.Items.Add("Film #4 - MD");
                 _combobox.Items.Add("Film (ENG) - HD");
-                _combobox.SelectedItem = "Film (ITA) - HD";
+                _combobox.SelectedItem = "Film #1 (ITA) - HD";
             }
             else if (_radioAnime.Checked)
             {
@@ -1763,7 +1763,7 @@ namespace WhoNeedsflixWinForm
 
         private void _tvShowTimeLabel_Click(object sender, EventArgs e)
         {
-            // nascondi robe
+            /* nascondi robe
             _mainPic.Visible = false;
             _mainPic.Visible = false;
 
@@ -1771,7 +1771,9 @@ namespace WhoNeedsflixWinForm
 
             _headerBackground.Visible = false;
             _headerPlayerImage.Visible = false;
-
+            */
+            BrowserForm _tvTimeForm = new BrowserForm("http://tvtime.com", "TVTime");
+            _tvTimeForm.Show();
 
         }
 

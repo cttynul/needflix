@@ -15,7 +15,7 @@ namespace WhoNeedsflixWinForm.Servers
 
         public Altadefinizione01(){
              masterUrl = "http://www.altadefinizione01.love/";
-             searchUrl = "http://www.altadefinizione01.love/?s=";
+             searchUrl = "?do=search&mode=advanced&subaction=search&story=";
         }
 
         public string search(string mySearch)
