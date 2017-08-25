@@ -168,7 +168,7 @@ namespace WhoNeedsflixWinForm.Servers
             doc.LoadHtml(source);
 
             var link = doc.DocumentNode.SelectSingleNode("//iframe[@class='metaframe rptss']");
-            var href = link.GetAttributeValue("data-lazy-src", ""); // l?iframe nel genio era "src"
+            var href = link.GetAttributeValue("src", ""); // l?iframe nel genio era "src"
             return href;
         }
 

@@ -206,6 +206,7 @@
     <Compile Include="Utils\NativeMethods.cs" />
     <Compile Include="Utils\Nowvideo.cs" />
     <Compile Include="Utils\Openload.cs" />
+    <Compile Include="Utils\Ping.cs" />
     <Compile Include="Utils\Rapidvideo.cs" />
     <Compile Include="Utils\SeriesDictionary.cs" />
     <Compile Include="Utils\Speedvideo.cs" />

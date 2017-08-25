@@ -24,6 +24,7 @@ namespace WhoNeedsflixWinForm
 
     public partial class MainForm : Form
     {
+        private Ping _ping = new Ping();
         private Genio _genio = new Genio();
         private Guardaserie _gSerie = new Guardaserie();
         private Altadefinizione01 _a01 = new Altadefinizione01();
@@ -279,6 +280,7 @@ namespace WhoNeedsflixWinForm
             {
                 SerieHDCerca();
             }
+            /*
             else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
             {
                 A01Cerca();
@@ -287,18 +289,21 @@ namespace WhoNeedsflixWinForm
             {
                 PirateCerca();
             }
+            */
             else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ENG) - HD")
             {
                 OpenLoadMovieCerca();
             }
-            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #3 - HD")
+            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - HD")
             {
                 FilmPerTuttiCerca();
             }
-            else if (_radioA01.Checked == true && (string)_combobox.SelectedItem == "Film #2 - HD")
+            /*
+            else if (_radioA01.Checked == true && (string)_combobox.SelectedItem == "Film #3 - HD")
             {
                 Cineblog01Cerca();
             }
+            */
             else if (_radioAnime.Checked == true && (string) _combobox.SelectedItem == "Anime ITA e SUB-ITA")
             {
                 AnimeForgeCerca();
@@ -327,7 +332,7 @@ namespace WhoNeedsflixWinForm
         {
             try
             {
-                if (_radioGuarda.Checked && (string)_combobox.SelectedItem == "Serie TV #1")
+                if (_radioGuarda.Checked)
                 {
                     if (_gridTVSeries.Visible == true)
                     {
@@ -342,7 +347,7 @@ namespace WhoNeedsflixWinForm
                 {
                     SerieHDLabelClick();
                 }
-                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
+                /*else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #1 - HD")
                 {
                     A01LabelCLick();
                 }
@@ -350,18 +355,21 @@ namespace WhoNeedsflixWinForm
                 {
                     PirateLabelClick();
                 }
+                */
                 else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ENG) - HD")
                 {
                     OpenLoadMovieLabelClick();
                 }
-                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film #3 - HD")
+                else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - HD")
                 {
                     FilmPerTuttiLabelClick();
                 }
+                /*
                 else if (_radioA01.Checked == true && (string)_combobox.SelectedItem == "Film #2 - HD")
                 {
                     Cineblog01LabelClick();
                 }
+                */
                 else if (_radioAnime.Checked == true && (string)_combobox.SelectedItem == "Anime ITA e SUB-ITA")
                 {
                     if (_gridTVSeries.Visible == true)
@@ -1292,6 +1300,13 @@ namespace WhoNeedsflixWinForm
          */
         private void A01Cerca()
         {
+            var isReachable = _ping.PingHost(_a01.masterUrl);
+            if (isReachable == false)
+            {
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.ErrorSearch;
+                _mainPic.BackColor = Color.Transparent;
+                _mainPic.Visible = true;
+            }
             try
             {
                 _mainPic.Visible = false;
@@ -1313,7 +1328,9 @@ namespace WhoNeedsflixWinForm
             }
             catch
             {
-                
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.ErrorSearch;
+                _mainPic.BackColor = Color.Transparent;
+                _mainPic.Visible = true;
             }
         }
 
@@ -1722,12 +1739,12 @@ namespace WhoNeedsflixWinForm
             _combobox.Items.Clear();
             if (_radioA01.Checked)
             {
-                _combobox.Items.Add("Film #1 - HD");
-                _combobox.Items.Add("Film #2 - HD");
-                _combobox.Items.Add("Film #3 - HD");
-                _combobox.Items.Add("Film #4 - MD");
+                _combobox.Items.Add("Film (ITA) - HD");
+                //_combobox.Items.Add("Film #2 - HD");
+                //_combobox.Items.Add("Film #3 - HD");
+                //_combobox.Items.Add("Film #4 - MD");
                 _combobox.Items.Add("Film (ENG) - HD");
-                _combobox.SelectedItem = "Film #1 - HD";
+                _combobox.SelectedItem = "Film (ITA) - HD";
             }
             else if (_radioAnime.Checked)
             {
