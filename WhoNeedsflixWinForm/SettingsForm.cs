@@ -28,5 +28,17 @@ namespace WhoNeedsflixWinForm
         {
             this.Close();
         }
+
+        private void metroLink2_Click(object sender, EventArgs e)
+        {
+            BrowserForm webB = new BrowserForm("http://www.piratestreaming.club/", "Test");
+            webB.Show();
+        }
+
+        private void metroLink3_Click(object sender, EventArgs e)
+        {
+            BrowserForm webB = new BrowserForm("http://www.serietvu.com/", "Test");
+            webB.Show();
+        }
     }
 }

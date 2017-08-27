@@ -332,7 +332,7 @@ namespace WhoNeedsflixWinForm
         {
             try
             {
-                if (_radioGuarda.Checked)
+                if (_radioGuarda.Checked && (string)_combobox.SelectedItem == "Serie TV #1")
                 {
                     if (_gridTVSeries.Visible == true)
                     {
@@ -876,7 +876,17 @@ namespace WhoNeedsflixWinForm
             _showBottomBar.Visible = true;*/
 
             if (_geckoWebBrowser.Dock == DockStyle.None)
+            {
                 _geckoWebBrowser.Dock = DockStyle.Fill;
+                if ((string)_combobox.SelectedItem == "Serie TV #2")
+                {
+                    _headerPlayerImage.Visible = true;
+                    _headerBackground.Visible = true;
+                    _headerBackground.Size = new System.Drawing.Size(1036, 177);
+                    _headerBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+                }
+            }
             else
             {
                 _geckoWebBrowser.Dock = DockStyle.None;
@@ -885,6 +895,14 @@ namespace WhoNeedsflixWinForm
                 | System.Windows.Forms.AnchorStyles.Right)));
                 _geckoWebBrowser.Width = this.Width;
                 _geckoWebBrowser.Height = this.Height - 56;
+
+                if ((string)_combobox.SelectedItem == "Serie TV #2")
+                {
+                    _headerPlayerImage.Visible = false;
+                    _headerBackground.Visible = false;
+                    _headerBackground.Size = new System.Drawing.Size(1036, 56);
+                    _headerBackground.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+                }
             }
 
             if(_fullScreen.Image == null)
@@ -1539,6 +1557,9 @@ namespace WhoNeedsflixWinForm
                 if (_openload.checkIfWorks(_filmUrl) == true)
                 {
                     InitBrowser(_filmUrl);
+                    _headerBackground.Visible = false;
+                    _fullscreenHeaderBtn.Visible = false;
+                    _headerPlayerImage.Visible = false;
                 }
                 else
                 {
@@ -1711,7 +1732,34 @@ namespace WhoNeedsflixWinForm
             try
             {
                 _filmUrl = _filmPerTutti.playUrl(_urlElementi.ElementAt(goForwardInfoResult).Value);
-                InitBrowser(_filmUrl);
+                if (_gridTVSeries.Visible == true)
+                {
+                    int selectedrowindex = _gridTVSeries.SelectedCells[0].RowIndex;
+                    string urlSelectedSeries = Convert.ToString(_gridTVSeries.Rows[selectedrowindex].Cells[1].Value);
+                    InitBrowser(urlSelectedSeries);
+                }
+                else if (_filmUrl == "serie")
+                {
+                    // e' una serie quindi faccio cose particolari
+                    List<SeriesDictionary> _serieTVEpisodi = _filmPerTutti.getEpisodes(_urlElementi.ElementAt(goForwardInfoResult).Value);
+
+                    //_urlElementi = _serieTVEpisodi;
+
+                    // Show grid
+                    seriesDictionaryBindingSource.DataSource = _serieTVEpisodi;
+                    _gridTVSeries.Visible = true;
+                    _labelResult.Text = _labelResult.Text + " - Episodi";
+                    goForwardInfoResult = 0;
+                }
+                else if (_filmUrl == "")
+                {
+                    InitBrowser("http://www.e-try.com/black.htm");
+                    _mainPic.Visible = true;
+                    _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Error;
+                    _mainPic.BackColor = Color.Black;
+                }
+                else
+                    InitBrowser(_filmUrl);
             }
             catch
             {
@@ -1824,7 +1872,7 @@ namespace WhoNeedsflixWinForm
             _mainPic.Visible = true;
             _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Blackground;
             if (_radioGuarda.Checked)
-                _combobox.Visible = false;
+                _combobox.Visible = true;
             PopulateCombobox();
         }
 

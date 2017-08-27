@@ -38,7 +38,7 @@
             this._geckoWebBrowser.FrameEventsPropagateToMainWindow = false;
             this._geckoWebBrowser.Location = new System.Drawing.Point(0, 0);
             this._geckoWebBrowser.Name = "_geckoWebBrowser";
-            this._geckoWebBrowser.Size = new System.Drawing.Size(687, 384);
+            this._geckoWebBrowser.Size = new System.Drawing.Size(808, 384);
             this._geckoWebBrowser.TabIndex = 0;
             this._geckoWebBrowser.UseHttpActivityObserver = false;
             // 
@@ -46,7 +46,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 384);
+            this.ClientSize = new System.Drawing.Size(808, 384);
             this.Controls.Add(this._geckoWebBrowser);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BrowserForm";

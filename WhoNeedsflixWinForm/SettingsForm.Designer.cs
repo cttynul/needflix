@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.metroLink1 = new MetroFramework.Controls.MetroLink();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.metroLink2 = new MetroFramework.Controls.MetroLink();
+            this.metroLink3 = new MetroFramework.Controls.MetroLink();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,12 +58,38 @@
             this.pictureBox1.TabIndex = 63;
             this.pictureBox1.TabStop = false;
             // 
+            // metroLink2
+            // 
+            this.metroLink2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.metroLink2.Location = new System.Drawing.Point(27, 98);
+            this.metroLink2.Name = "metroLink2";
+            this.metroLink2.Size = new System.Drawing.Size(139, 23);
+            this.metroLink2.TabIndex = 64;
+            this.metroLink2.Text = "WebBrowser #1";
+            this.metroLink2.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLink2.UseSelectable = true;
+            this.metroLink2.Click += new System.EventHandler(this.metroLink2_Click);
+            // 
+            // metroLink3
+            // 
+            this.metroLink3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.metroLink3.Location = new System.Drawing.Point(27, 127);
+            this.metroLink3.Name = "metroLink3";
+            this.metroLink3.Size = new System.Drawing.Size(139, 23);
+            this.metroLink3.TabIndex = 65;
+            this.metroLink3.Text = "WebBrowser #2";
+            this.metroLink3.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.metroLink3.UseSelectable = true;
+            this.metroLink3.Click += new System.EventHandler(this.metroLink3_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.ClientSize = new System.Drawing.Size(752, 365);
+            this.Controls.Add(this.metroLink3);
+            this.Controls.Add(this.metroLink2);
             this.Controls.Add(this.metroLink1);
             this.Controls.Add(this.pictureBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -77,5 +105,7 @@
 
         private MetroFramework.Controls.MetroLink metroLink1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private MetroFramework.Controls.MetroLink metroLink2;
+        private MetroFramework.Controls.MetroLink metroLink3;
     }
 }

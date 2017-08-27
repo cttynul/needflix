@@ -54,6 +54,7 @@ namespace WhoNeedsflixWinForm.Servers
                     result.Add(new KeyValuePair<string, string>(nameFixed.Trim(), href));
                 }
             }
+
             return result;
         }
 
