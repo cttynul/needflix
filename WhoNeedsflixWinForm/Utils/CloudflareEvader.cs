@@ -5,11 +5,8 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Collections;
 using System.Threading;
-using System.Diagnostics.Contracts;
-using System.Dynamic;
-using System.Reflection;
 
-namespace WhoNeedsflix.Utils
+namespace Cloudflare_Evader
 {
     public class CloudflareEvader
     {

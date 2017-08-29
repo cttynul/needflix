@@ -175,9 +175,18 @@
     <Compile Include="BrowserForm.Designer.cs">
       <DependentUpon>BrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CloudflareKiller\ChallengeSolution.cs" />
+    <Compile Include="CloudflareKiller\ChallengeSolver.cs" />
+    <Compile Include="CloudflareKiller\ClearanceHandler.cs" />
+    <Compile Include="CloudflareKiller\CloudflareClearanceException.cs" />
+    <Compile Include="CloudflareKiller\CookieExtensions.cs" />
+    <Compile Include="CloudflareKiller\HttpHeader.cs" />
+    <Compile Include="CloudflareKiller\HttpMessageHandlerExtensions.cs" />
     <Compile Include="Servers\AnimeForge.cs" />
     <Compile Include="Servers\AnimeTube.cs" />
     <Compile Include="Servers\Cineblog01.cs" />
+    <Compile Include="Servers\CinemaSubito.cs" />
+    <Compile Include="Servers\GenioDelloStreaming.cs" />
     <Compile Include="Servers\SerieHD.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
