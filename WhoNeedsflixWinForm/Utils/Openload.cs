@@ -23,7 +23,7 @@ namespace WhoNeedsflixWinForm.Utils
 
         public string getDownloadlink(string url)
         {
-            string toBeDownloaded = url.Replace("embed", "f");
+            string toBeDownloaded = url.Replace("/embed/", "/f/");
             return toBeDownloaded;
         }
 
@@ -55,7 +55,7 @@ namespace WhoNeedsflixWinForm.Utils
         public string getEmbedOpenloadlink(string url)
         {
             // Da mandare in pasto alla webview
-            string toBeStreamed = url.Replace("f", "embed");
+            string toBeStreamed = url.Replace("/f/", "/embed/");
             return toBeStreamed;
         }
 

@@ -305,6 +305,8 @@
     <None Include="Resources\MaximizeIcon1.png" />
     <None Include="Resources\Minimize.png" />
     <None Include="Resources\SettingsLogo.png" />
+    <None Include="Resources\MainPicLoading.gif" />
+    <None Include="Resources\Loading.png" />
     <Content Include="WhoneedsflixIcon.ico" />
     <None Include="Resources\left-arrow.png" />
     <None Include="Resources\cloud-computing.png" />

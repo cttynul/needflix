@@ -18,12 +18,17 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace WhoNeedsflixWinForm
 {
 
     public partial class MainForm : Form
     {
+        /*
+         * FIREFOX EXTENTIONS
+         * https://bitbucket.org/geckofx/geckofx-29.0/issues/211/firefox-extension-in-geckofx
+         */
         private Ping _ping = new Ping();
         private Genio _genio = new Genio();
         private GenioDelloStreaming _genioDelloStreaming = new GenioDelloStreaming();
@@ -63,22 +68,39 @@ namespace WhoNeedsflixWinForm
         public bool fullScreenMode;
         private uint fPreviousExecutionState;
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-
-        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        private void MoveWindow(object sender, System.Windows.Forms.MouseEventArgs e)
+        // START SLEEP ZONE //
+        [FlagsAttribute()]
+        public enum EXECUTION_STATE : uint //Determine Monitor State
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
+            ES_AWAYMODE_REQUIRED = 0x40,
+            ES_CONTINUOUS = 0x80000000u,
+            ES_DISPLAY_REQUIRED = 0x2,
+            ES_SYSTEM_REQUIRED = 0x1
+            // Legacy flag, should not be used.
+            // ES_USER_PRESENT = 0x00000004
         }
+
+        //Enables an application to inform the system that it is in use, thereby preventing the system from entering sleep or turning off the display while the application is running.
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
+
+        //This function queries or sets system-wide parameters, and updates the user profile during the process.
+        [DllImport("user32", EntryPoint = "SystemParametersInfo", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+
+        private const Int32 SPI_SETSCREENSAVETIMEOUT = 15;
+
+        public void KeepMonitorActive()
+        {
+            SetThreadExecutionState(EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_CONTINUOUS); //Do not Go To Sleep
+        }
+
+        public void RestoreMonitorSettings()
+        {
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS); //Restore Previous Settings, ie, Go To Sleep Again
+        }
+
+        // END SLEEP ZONE //
 
         public MainForm()
         {
@@ -131,7 +153,7 @@ namespace WhoNeedsflixWinForm
             PopulateCombobox();
 
             // show linklabes
-            _tvShowTimeLabel.Visible = true;
+            _traktvLabel.Visible = true;
 
             // show favs button
             _showFavsIcon.Visible = true;
@@ -176,7 +198,7 @@ namespace WhoNeedsflixWinForm
             _combobox.Visible = false;
 
             //hide tvshowtime
-            _tvShowTimeLabel.Visible = false;
+            _traktvLabel.Visible = false;
 
             // hide add to favs label
             _addToFavBtn.Visible = false;
@@ -264,8 +286,9 @@ namespace WhoNeedsflixWinForm
             _labelResult.Text = "NoResult";
             _guardaButton.Visible = true;
             _trailerButton.Visible = true;
-            //_serieTVEpisodi.Clear();
+            _mainPic.BackColor = Color.Transparent;
             _mainPic.Visible = false;
+
 
             // nascondi grid
             _gridTVSeries.Visible = false;
@@ -280,7 +303,7 @@ namespace WhoNeedsflixWinForm
             else if (_radioGuarda.Checked == true && (string)_combobox.SelectedItem == "Film e Serie TV - 720p")
                 FilmPerTuttiCerca();
             
-            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - 1080p")
+            else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ITA) - 1080p") 
                 CinemaSubitoCerca();
 
             else if (_radioA01.Checked == true && (string) _combobox.SelectedItem == "Film (ENG) - 1080p")
@@ -302,6 +325,7 @@ namespace WhoNeedsflixWinForm
                 _mainPic.Visible = true;
                 _guardaButton.Visible = false;
                 _trailerButton.Visible = false;
+                _mainPicLoading.Visible = false;
             }
 
             /*
@@ -417,6 +441,9 @@ namespace WhoNeedsflixWinForm
 
         private void PopulateInfo()
         {
+            _mainPicLoading.Visible = true;
+            _mainPicLoading.Refresh();
+
             try
             {
                 var goNextUrl = _urlElementi.ElementAt(goForwardInfoResult).Key;
@@ -453,9 +480,12 @@ namespace WhoNeedsflixWinForm
                             _resultPictureBox.Load(goNextPic);
 
                         }
+                        _mainPicLoading.Visible = false;
                     }
                     catch
                     {
+                        _mainPicLoading.Visible = true;
+                        _mainPicLoading.Refresh();
                         // nothing to change
                         if (!Regex.IsMatch(goNextUrl, @"^\d+"))
                         {
@@ -465,12 +495,16 @@ namespace WhoNeedsflixWinForm
                             // Populate results
 
                             _resultPictureBox.Load(goNextPic);
-                        }
 
+                        }
+                        _mainPicLoading.Visible = false;
                     }
                 }
                 else
                 {
+                    _mainPicLoading.Visible = true;
+                    _mainPicLoading.Refresh();
+
                     if (_tmdb.getDescFilm(_urlElementi.ElementAt(goForwardInfoResult).Key) != "")
                     {
                         _richDescription.Text = _tmdb.getDescFilm(_urlElementi.ElementAt(goForwardInfoResult).Key);
@@ -505,6 +539,8 @@ namespace WhoNeedsflixWinForm
                         _resultPictureBox.Load(goNextPic);
 
                     }
+                    _mainPicLoading.Visible = false;
+
                 }
 
             }
@@ -516,6 +552,8 @@ namespace WhoNeedsflixWinForm
                     var goNextName = _urlElementi.ElementAt(goForwardInfoResult).Value;
                     _labelResult.Text = goNextUrl;
                     var currentUrl = _urlElementi.ElementAt(goForwardInfoResult).Key;
+                    _mainPicLoading.Visible = true;
+                    _mainPicLoading.Refresh();
 
                     if (_radioGuarda.Checked)
                     {
@@ -614,6 +652,7 @@ namespace WhoNeedsflixWinForm
                 }
                 catch
                 {
+                    _mainPicLoading.Visible = false;
                     goForwardInfoResult = 0;
                     if(_labelResult.Text == "NoResult")
                     {
@@ -622,6 +661,7 @@ namespace WhoNeedsflixWinForm
                     }
                 }
             }
+            _mainPicLoading.Visible = false;
             int countCurrent = goForwardInfoResult + 1;
             int countTotal = Convert.ToInt32(_urlElementi.Count());
             _labelCountResult.Text = "Risultati: " + countCurrent + " di " + countTotal;
@@ -693,7 +733,7 @@ namespace WhoNeedsflixWinForm
                 _fullscreenHeaderBtn.Image = WhoNeedsflixWinForm.Properties.Resources.diagonal_1_;
 
                 // Prevent from going to sleep zzz
-                fPreviousExecutionState = NativeMethods.SetThreadExecutionState(NativeMethods.ES_CONTINUOUS | NativeMethods.ES_SYSTEM_REQUIRED);
+                KeepMonitorActive();
             }
             else
             {
@@ -708,7 +748,7 @@ namespace WhoNeedsflixWinForm
                 _fullscreenHeaderBtn.Image = WhoNeedsflixWinForm.Properties.Resources.stretch_2_;
 
                 // Restore old config from going to sleep
-                NativeMethods.SetThreadExecutionState(fPreviousExecutionState);
+                RestoreMonitorSettings();
             }
         }
 
@@ -803,7 +843,7 @@ namespace WhoNeedsflixWinForm
              _combobox.Visible = true;
 
             // show linklabes
-            _tvShowTimeLabel.Visible = true;
+            _traktvLabel.Visible = true;
 
             // show favs button
             _showFavsIcon.Visible = true;
@@ -1332,20 +1372,15 @@ namespace WhoNeedsflixWinForm
             string _olUrl = _cinemaSubito.playUrl(_urlElementi.ElementAt(goForwardInfoResult).Value);
             // check se esiste url di openload
             var _toBeStreamed = _openload.getEmbedOpenloadlink(_olUrl);
-
             if (_openload.checkIfWorks(_toBeStreamed))
+                InitBrowser(_toBeStreamed);
+           
+            else
             {
-                try
-                {
-                    InitBrowser(_toBeStreamed);
-                }
-                catch
-                {
-                    InitBrowser("http://www.e-try.com/black.htm");
-                    _mainPic.Visible = true;
-                    _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Error;
-                    _mainPic.BackColor = Color.Black;
-                }
+                InitBrowser("http://www.e-try.com/black.htm");
+                _mainPic.Visible = true;
+                _mainPic.Image = WhoNeedsflixWinForm.Properties.Resources.Error;
+                _mainPic.BackColor = Color.Black;
             }
         }
 
@@ -1906,19 +1941,10 @@ namespace WhoNeedsflixWinForm
             }
         }
 
-        private void _tvShowTimeLabel_Click(object sender, EventArgs e)
+        private void _trakt_Click(object sender, EventArgs e)
         {
-            /* nascondi robe
-            _mainPic.Visible = false;
-            _mainPic.Visible = false;
-
-            InitBrowser("http://tvtime.com");
-
-            _headerBackground.Visible = false;
-            _headerPlayerImage.Visible = false;
-            */
-            BrowserForm _tvTimeForm = new BrowserForm("http://tvtime.com", "TVTime");
-            _tvTimeForm.Show();
+            //BrowserForm _bForm = new BrowserForm("https://trakt.tv", "Trak.tv");
+            //_bForm.Show();
 
         }
 

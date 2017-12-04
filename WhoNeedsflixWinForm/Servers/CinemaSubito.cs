@@ -101,12 +101,12 @@ namespace WhoNeedsflixWinForm.Servers
             var doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(source);
 
-            foreach (var div in doc.DocumentNode.SelectNodes("//a[@style='color:#fff;text-decoration:underline']"))
+            foreach (var div in doc.DocumentNode.SelectNodes("//a[@rel='nofollow']"))
             {
                 var href = div.GetAttributeValue("href", "");
                 if (href.StartsWith("https://openload.co"))
                 {
-                    href.Replace("/f/", "/embed/");
+                    //href.Replace("/f/", "/embed/");
                     result = href;
                 }
             }

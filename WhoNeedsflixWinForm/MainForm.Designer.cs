@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.searchTextBox = new MetroFramework.Controls.MetroTextBox();
             this.searchButton = new MetroFramework.Controls.MetroButton();
@@ -41,15 +41,13 @@
             this._richDescription = new System.Windows.Forms.RichTextBox();
             this._radioGuarda = new MetroFramework.Controls.MetroRadioButton();
             this._radioA01 = new MetroFramework.Controls.MetroRadioButton();
-            this._tvShowTimeLabel = new MetroFramework.Controls.MetroLink();
+            this._traktvLabel = new MetroFramework.Controls.MetroLink();
             this._gridTVSeries = new MetroFramework.Controls.MetroGrid();
-            this.episodioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.seriesDictionaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this._labelCountResult = new MetroFramework.Controls.MetroLabel();
             this._helpButton = new MetroFramework.Controls.MetroLink();
             this._combobox = new MetroFramework.Controls.MetroComboBox();
             this._radioAnime = new MetroFramework.Controls.MetroRadioButton();
+            this._mainPicLoading = new System.Windows.Forms.PictureBox();
             this._iconizeBtn = new MetroFramework.Controls.MetroLink();
             this._maximizeBtn = new MetroFramework.Controls.MetroLink();
             this._closeBtn = new MetroFramework.Controls.MetroLink();
@@ -79,9 +77,12 @@
             this._nextBtn = new MetroFramework.Controls.MetroLink();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._backgroundToBePopuled = new System.Windows.Forms.PictureBox();
+            this.episodioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.seriesDictionaryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._gridTVSeries)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._mainPicLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._mainPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._trailerButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._guardaButton)).BeginInit();
@@ -98,6 +99,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._resultPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._backgroundToBePopuled)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // searchTextBox
@@ -239,23 +241,23 @@
             this._radioA01.UseSelectable = true;
             this._radioA01.CheckedChanged += new System.EventHandler(this._radioA01_CheckedChanged);
             // 
-            // _tvShowTimeLabel
+            // _traktvLabel
             // 
-            this._tvShowTimeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._tvShowTimeLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this._tvShowTimeLabel.FontWeight = MetroFramework.MetroLinkWeight.Light;
-            this._tvShowTimeLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this._tvShowTimeLabel.ImageSize = 24;
-            this._tvShowTimeLabel.Location = new System.Drawing.Point(12, 568);
-            this._tvShowTimeLabel.Name = "_tvShowTimeLabel";
-            this._tvShowTimeLabel.Size = new System.Drawing.Size(257, 36);
-            this._tvShowTimeLabel.Style = MetroFramework.MetroColorStyle.White;
-            this._tvShowTimeLabel.TabIndex = 42;
-            this._tvShowTimeLabel.Text = "Aggiorna le ultime serie viste su TVShowTime";
-            this._tvShowTimeLabel.UseCustomBackColor = true;
-            this._tvShowTimeLabel.UseCustomForeColor = true;
-            this._tvShowTimeLabel.UseSelectable = true;
-            this._tvShowTimeLabel.Click += new System.EventHandler(this._tvShowTimeLabel_Click);
+            this._traktvLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._traktvLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this._traktvLabel.FontWeight = MetroFramework.MetroLinkWeight.Light;
+            this._traktvLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this._traktvLabel.ImageSize = 24;
+            this._traktvLabel.Location = new System.Drawing.Point(0, 579);
+            this._traktvLabel.Name = "_traktvLabel";
+            this._traktvLabel.Size = new System.Drawing.Size(181, 37);
+            this._traktvLabel.Style = MetroFramework.MetroColorStyle.White;
+            this._traktvLabel.TabIndex = 42;
+            this._traktvLabel.Text = "Brought to you by cttynul with ♥";
+            this._traktvLabel.UseCustomBackColor = true;
+            this._traktvLabel.UseCustomForeColor = true;
+            this._traktvLabel.UseSelectable = true;
+            this._traktvLabel.Click += new System.EventHandler(this._trakt_Click);
             // 
             // _gridTVSeries
             // 
@@ -268,28 +270,28 @@
             this._gridTVSeries.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._gridTVSeries.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this._gridTVSeries.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this._gridTVSeries.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this._gridTVSeries.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this._gridTVSeries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._gridTVSeries.ColumnHeadersVisible = false;
             this._gridTVSeries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.episodioDataGridViewTextBoxColumn,
             this.urlDataGridViewTextBoxColumn});
             this._gridTVSeries.DataSource = this.seriesDictionaryBindingSource;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this._gridTVSeries.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this._gridTVSeries.DefaultCellStyle = dataGridViewCellStyle2;
             this._gridTVSeries.EnableHeadersVisualStyles = false;
             this._gridTVSeries.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this._gridTVSeries.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
@@ -298,14 +300,14 @@
             this._gridTVSeries.Name = "_gridTVSeries";
             this._gridTVSeries.ReadOnly = true;
             this._gridTVSeries.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this._gridTVSeries.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(102)))), ((int)(((byte)(102)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this._gridTVSeries.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this._gridTVSeries.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this._gridTVSeries.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this._gridTVSeries.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -318,27 +320,6 @@
             this._gridTVSeries.Visible = false;
             this._gridTVSeries.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._gridTVSeries_Click);
             this._gridTVSeries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._gridTVSeries_Click);
-            // 
-            // episodioDataGridViewTextBoxColumn
-            // 
-            this.episodioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.episodioDataGridViewTextBoxColumn.DataPropertyName = "Episodio";
-            this.episodioDataGridViewTextBoxColumn.HeaderText = "Episodio";
-            this.episodioDataGridViewTextBoxColumn.Name = "episodioDataGridViewTextBoxColumn";
-            this.episodioDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // urlDataGridViewTextBoxColumn
-            // 
-            this.urlDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
-            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
-            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
-            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.urlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // seriesDictionaryBindingSource
-            // 
-            this.seriesDictionaryBindingSource.DataSource = typeof(WhoNeedsflixWinForm.Utils.SeriesDictionary);
             // 
             // _labelCountResult
             // 
@@ -402,6 +383,22 @@
             this._radioAnime.UseCustomBackColor = true;
             this._radioAnime.UseSelectable = true;
             this._radioAnime.CheckedChanged += new System.EventHandler(this._radioAnime_CheckedChanged);
+            // 
+            // _mainPicLoading
+            // 
+            this._mainPicLoading.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._mainPicLoading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this._mainPicLoading.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this._mainPicLoading.Image = global::WhoNeedsflixWinForm.Properties.Resources.MainPicLoading;
+            this._mainPicLoading.Location = new System.Drawing.Point(-5, 138);
+            this._mainPicLoading.Name = "_mainPicLoading";
+            this._mainPicLoading.Size = new System.Drawing.Size(1041, 424);
+            this._mainPicLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._mainPicLoading.TabIndex = 65;
+            this._mainPicLoading.TabStop = false;
+            this._mainPicLoading.Visible = false;
             // 
             // _iconizeBtn
             // 
@@ -655,7 +652,6 @@
             this._headerBGHome.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this._headerBGHome.TabIndex = 44;
             this._headerBGHome.TabStop = false;
-            this._headerBGHome.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
             // _backBtn
             // 
@@ -801,7 +797,6 @@
             this._headerBackground.TabIndex = 8;
             this._headerBackground.TabStop = false;
             this._headerBackground.Visible = false;
-            this._headerBackground.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
             // _resultPictureBox
             // 
@@ -857,12 +852,34 @@
             this._backgroundToBePopuled.TabStop = false;
             this._backgroundToBePopuled.Visible = false;
             // 
+            // episodioDataGridViewTextBoxColumn
+            // 
+            this.episodioDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.episodioDataGridViewTextBoxColumn.DataPropertyName = "Episodio";
+            this.episodioDataGridViewTextBoxColumn.HeaderText = "Episodio";
+            this.episodioDataGridViewTextBoxColumn.Name = "episodioDataGridViewTextBoxColumn";
+            this.episodioDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // urlDataGridViewTextBoxColumn
+            // 
+            this.urlDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
+            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
+            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
+            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.urlDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // seriesDictionaryBindingSource
+            // 
+            this.seriesDictionaryBindingSource.DataSource = typeof(WhoNeedsflixWinForm.Utils.SeriesDictionary);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             this.ClientSize = new System.Drawing.Size(1033, 616);
+            this.Controls.Add(this._mainPicLoading);
             this.Controls.Add(this._radioAnime);
             this.Controls.Add(this._iconizeBtn);
             this.Controls.Add(this._maximizeBtn);
@@ -886,7 +903,7 @@
             this.Controls.Add(this._radioA01);
             this.Controls.Add(this._headerBGHome);
             this.Controls.Add(this._backBtn);
-            this.Controls.Add(this._tvShowTimeLabel);
+            this.Controls.Add(this._traktvLabel);
             this.Controls.Add(this._helpButton);
             this.Controls.Add(this._downloadButton);
             this.Controls.Add(this._miniNoFullScreen);
@@ -911,7 +928,7 @@
             this.Text = "Needflix";
             ((System.ComponentModel.ISupportInitialize)(this.metroStyleManager)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._gridTVSeries)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._mainPicLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._mainPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._trailerButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._guardaButton)).EndInit();
@@ -928,6 +945,7 @@
             ((System.ComponentModel.ISupportInitialize)(this._resultPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._backgroundToBePopuled)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesDictionaryBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -959,7 +977,7 @@
         private MetroFramework.Controls.MetroLink _nextBtn;
         private MetroFramework.Controls.MetroRadioButton _radioGuarda;
         private MetroFramework.Controls.MetroRadioButton _radioA01;
-        private MetroFramework.Controls.MetroLink _tvShowTimeLabel;
+        private MetroFramework.Controls.MetroLink _traktvLabel;
         private System.Windows.Forms.PictureBox _headerBGHome;
         private System.Windows.Forms.PictureBox _backgroundToBePopuled;
         private System.Windows.Forms.PictureBox _guardaButton;
@@ -981,6 +999,7 @@
         private MetroFramework.Controls.MetroLink _maximizeBtn;
         private MetroFramework.Controls.MetroLink _iconizeBtn;
         private MetroFramework.Controls.MetroRadioButton _radioAnime;
+        private System.Windows.Forms.PictureBox _mainPicLoading;
     }
 }
 
